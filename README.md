@@ -64,8 +64,6 @@ You should see output like so:
 ```shell
 > node index.ts
 
-Server is running on port 3006.
+Server is running on port 3007.
 ```
 
-# legal
-# notification
