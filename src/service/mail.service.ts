@@ -21,7 +21,7 @@ mail.service.ts - AWS SES email service
 import { SES } from "@aws-sdk/client-ses";
 import { getParams } from "../utility/EmailParams";
 import { getTestBody, getAgentBody, getMonitorBody } from "../utility/EmailBody";
-import EmailType from "../types/email.type";
+import EmailInviteType from "../types/email.invite.type";
 import config from "../config/config";
 
 class MailService {
@@ -36,9 +36,8 @@ class MailService {
     });
 
     // Send Agent Invitation Email
-    emailAgent(formData: EmailType) {
-        console.log(formData.email);
-        const params= getParams(formData.email, getAgentBody(formData.name), "VirtualYou Agent Invitation", "me@dlwhitehurst.com");
+    emailAgent(obj: EmailInviteType) {
+        const params= getParams(obj.email, getAgentBody(obj.name, obj.owner, obj.returnLink), "VirtualYou Agent Invitation", "me@dlwhitehurst.com");
         this.ses.sendEmail(params, (err: any, data: any) => {
             if (err) {
                 console.error(err);
@@ -49,9 +48,8 @@ class MailService {
     }
 
     // Send Monitor Invitation Email
-    emailMonitor(formData: EmailType) {
-        console.log(formData.email);
-        const params= getParams(formData.email, getMonitorBody(formData.name), "VirtualYou Monitor Invitation", "me@dlwhitehurst.com");
+    emailMonitor(obj: EmailInviteType) {
+        const params= getParams(obj.email, getMonitorBody(obj.name, obj.owner, obj.returnLink), "VirtualYou Monitor Invitation", "me@dlwhitehurst.com");
         this.ses.sendEmail(params, (err: any, data: any) => {
             if (err) {
                 console.error(err);
@@ -61,10 +59,9 @@ class MailService {
         });
     }
 
-    // Send Agent Invitation Email
-    emailTest(formData: EmailType) {
-        console.log(formData.email);
-        const params= getParams(formData.email, getTestBody(formData.name), "VirtualYou Test Notification", "me@dlwhitehurst.com");
+    // Send Test Email
+    emailTest(obj: EmailInviteType) {
+        const params= getParams(obj.email, getTestBody(obj.name), "VirtualYou Test Notification", "me@dlwhitehurst.com");
         this.ses.sendEmail(params, (err: any, data: any) => {
             if (err) {
                 console.error(err);

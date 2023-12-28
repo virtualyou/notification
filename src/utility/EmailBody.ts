@@ -13,53 +13,35 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-EmailBody.ts - Function exports for Agent and Monitor email bodies
+email.utils.ts - Function exports for Agent and Monitor email bodies
 @author David L Whitehurst
 
 */
-
-//import AuthService from "../services/auth.service.ts";
-//import forge from "node-forge";
 
 /**
  * This is a function that prepares an AWS SES Agent invitation email body.
  *
  * @param {string} name - The person the email is addressing.
+ * @param {string} owner - The owner that sent the email.
+ * @param {string} returnLink - The return link for the new registration.
  * @returns {string} The text email body.
  */
-export function getAgentBody(name: string) {
-//    const currentUser = AuthService.getCurrentUser();
-//    const id = currentUser.id;
-//    const agentMne = currentUser.agentMnemonic;
-//    const myName = currentUser.username;
-//    const md = forge.md.sha256.create();
-//    md.update(agentMne);
-//    const dkey = md.digest().toHex();
-//    const retLink = "https://app.virtualyou.info" + "#/register-agent?ownerid=" + id + "&dkey=" + dkey;
-
-//    return name + ",\n\nYou have been invited to be an Agent for " + myName + ". Use this link to register and begin helping " + myName + ".\n\n" + retLink;
-    return name + " ,this is just a sentence to fill the email body for development and testing";
+export function getAgentBody(name: string, owner: string, returnLink: string) {
+    return name + " , " + owner + " is sending you an invite to be an Agent for their VirtualYou account. Please call "
+        + owner + " to verify this and get a one-time passcode before using this link. " + returnLink;
 }
 
 /**
  * This is a function that prepares an AWS SES Monitor invitation email body.
  *
  * @param {string} name - The person the email is addressing.
+ * @param {string} owner - The owner that sent the email.
+ * @param {string} returnLink - The return link for the new registration.
  * @returns {string} The text email body.
  */
-export function getMonitorBody(name: string) {
-    // const currentUser = AuthService.getCurrentUser();
-    // const id = currentUser.id;
-    // const monitorMne = currentUser.monitorMnemonic;
-    // const myName = currentUser.username;
-    // const md = forge.md.sha256.create();
-    // md.update(monitorMne);
-    // const dkey = md.digest().toHex();
-    // const retLink = "https://app.virtualyou.info" + "#/register-monitor?ownerid=" + id + "&dkey=" + dkey;
-
-//    return name + ",\n\nYou have been invited to be a Monitor for " + myName + ". Use this link to register and begin helping " + myName + ".\n\n" + retLink;
-    return name + " ,this is just a sentence to fill the email body for development and testing";
-
+export function getMonitorBody(name: string, owner: string, returnLink: string) {
+    return name + " , " + owner + " is sending you an invite to be a Monitor for their VirtualYou account. Please call "
+        + owner + " to verify this and get a one-time passcode before using this link. " + returnLink;
 }
 
 export function getTestBody(name: string) {

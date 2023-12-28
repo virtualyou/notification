@@ -26,7 +26,9 @@ const sendTest = (req: Request, res: Response) => {
     // Create new mail data object
     const data = {
         name: req.body.name,
-        email: req.body.email
+        email: req.body.email,
+        owner: req.body.owner,
+        returnLink: req.body.returnLink
     };
 
     try {
@@ -44,7 +46,9 @@ const sendAgentInvite = (req: Request, res: Response) => {
     // Create new mail data object
     const data = {
         name: req.body.name,
-        email: req.body.email
+        email: req.body.email,
+        owner: req.body.owner,
+        returnLink: req.body.returnLink
     };
 
     try {
@@ -61,7 +65,9 @@ const sendMonitorInvite = (req: Request, res: Response) => {
     // Create new mail data object
     const data = {
         name: req.body.name,
-        email: req.body.email
+        email: req.body.email,
+        owner: req.body.owner,
+        returnLink: req.body.returnLink
     };
 
     try {

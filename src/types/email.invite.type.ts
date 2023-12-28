@@ -13,12 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-email.type.ts - Type for name, email for modal form prior to email invite
+email.invite.type.ts - Type for name, email for modal form prior to email invite
 @author David L Whitehurst
 
 */
 
-export default interface EmailType {
+export default interface EmailInviteType {
      name: string;
      email: string;
+     owner: string;
+     returnLink: string;
 }
