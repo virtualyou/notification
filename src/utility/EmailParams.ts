@@ -19,19 +19,34 @@ EmailParams.ts - Function getParams for Agent and Monitor emails
 */
 
 import Params from "../types/params.type";
+import TParams from "../types/templateparams.type";
 
 export function getParams(recp: string, body: string, subject: string, src: string) {
     const params: Params = {
-        Destination: { ToAddresses: [recp] },
+        Destination: {ToAddresses: [recp]},
         Message: {
-            Body: { Text: { Data: body } },
-        Subject: { Data: subject }
+            Body: {Text: {Data: body}},
+            Subject: {Data: subject}
         },
         Source: src
     }
     return params;
 }
 
+export function getTemplateParams(recipientName: string, recipientEmail: string, sourceEmail: string,
+                                  ownerName: string, returnLink: string, template: string) {
+    const params: TParams = {
+        Destination: {ToAddresses: [recipientEmail]},
+        Source: sourceEmail,
+        Template: template,
+        TemplateData: '{' +
+            '\"name\": \"' + recipientName + '\",' +
+            ' \"owner\": \"' + ownerName + '\",' +
+            '\"returnLink\": \"' + returnLink + '\"' +
+            '}',
+    }
+    return params;
+}
 
 
 

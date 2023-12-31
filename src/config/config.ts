@@ -32,7 +32,6 @@ const envSchema = Joi.object().keys({
     AWS_REGION: Joi.string().required().default('us-east-1'),
     AWS_ACCESS_KEY: Joi.string().required().default('xyz'),
     AWS_SECRET_ACCESS_KEY: Joi.string().required().default('xyz456'),
-    USERAUTH_SERVER_PORT_URL: Joi.string().required().default('http://localhost:3001')
 });
 
 const { value: validatedEnv, error } = envSchema

@@ -22,7 +22,7 @@
 import { Request, Response } from 'express';
 import mailService from "../service/mail.service";
 
-const sendTest = (req: Request, res: Response) => {
+const sendAgentInvite = async (req: Request, res: Response) => {
     // Create new mail data object
     const data = {
         name: req.body.name,
@@ -32,7 +32,7 @@ const sendTest = (req: Request, res: Response) => {
     };
 
     try {
-        mailService.emailTest(data);
+        await mailService.emailAgent(data);
         res.status(200).send({
             message: "Email sent!"
         });
@@ -41,8 +41,7 @@ const sendTest = (req: Request, res: Response) => {
     }
 }
 
-
-const sendAgentInvite = (req: Request, res: Response) => {
+const sendMonitorInvite = async (req: Request, res: Response) => {
     // Create new mail data object
     const data = {
         name: req.body.name,
@@ -52,26 +51,7 @@ const sendAgentInvite = (req: Request, res: Response) => {
     };
 
     try {
-        mailService.emailAgent(data);
-        res.status(200).send({
-            message: "Email sent!"
-        });
-    } catch {
-        res.status(500).send('Internal server error');
-    }
-}
-
-const sendMonitorInvite = (req: Request, res: Response) => {
-    // Create new mail data object
-    const data = {
-        name: req.body.name,
-        email: req.body.email,
-        owner: req.body.owner,
-        returnLink: req.body.returnLink
-    };
-
-    try {
-        mailService.emailMonitor(data);
+        await mailService.emailMonitor(data);
         res.status(200).send({
             message: "Email sent!"
         });
@@ -81,7 +61,6 @@ const sendMonitorInvite = (req: Request, res: Response) => {
 }
 
 const controller = {
-    sendTest,
     sendAgentInvite,
     sendMonitorInvite
 };

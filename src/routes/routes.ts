@@ -39,11 +39,6 @@ router.use((_req: Request, res: Response, next: NextFunction) => {
  * ************************************************************************
  */
 
-router.post(
-    "/notification/v1/test",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    controller.sendTest
-);
 
 /*
  * ************************************************************************

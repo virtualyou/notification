@@ -19,8 +19,7 @@ mail.service.ts - AWS SES email service
 */
 
 import { SES } from "@aws-sdk/client-ses";
-import { getParams } from "../utility/EmailParams";
-import { getTestBody, getAgentBody, getMonitorBody } from "../utility/EmailBody";
+import { getTemplateParams } from "../utility/EmailParams";
 import EmailInviteType from "../types/email.invite.type";
 import config from "../config/config";
 
@@ -36,40 +35,38 @@ class MailService {
     });
 
     // Send Agent Invitation Email
-    emailAgent(obj: EmailInviteType) {
-        const params= getParams(obj.email, getAgentBody(obj.name, obj.owner, obj.returnLink), "VirtualYou Agent Invitation", "me@dlwhitehurst.com");
-        this.ses.sendEmail(params, (err: any, data: any) => {
-            if (err) {
-                console.error(err);
-            } else {
-                console.log(data);
-            }
-        });
+    async emailAgent(obj: EmailInviteType) {
+        const params= getTemplateParams(obj.name, obj.email,"me@dlwhitehurst.com", obj.owner, obj.returnLink, "agentTemplate");
+        try {
+            // @ts-ignore
+            await this.ses.sendTemplatedEmail(params, (err: any, data: any) => {
+                if (err) {
+                    console.error(err);
+                } else {
+                    console.log(data);
+                }
+            });
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     // Send Monitor Invitation Email
-    emailMonitor(obj: EmailInviteType) {
-        const params= getParams(obj.email, getMonitorBody(obj.name, obj.owner, obj.returnLink), "VirtualYou Monitor Invitation", "me@dlwhitehurst.com");
-        this.ses.sendEmail(params, (err: any, data: any) => {
-            if (err) {
-                console.error(err);
-            } else {
-                console.log(data);
-            }
-        });
+    async emailMonitor(obj: EmailInviteType) {
+        const params= getTemplateParams(obj.name, obj.email,"me@dlwhitehurst.com", obj.owner, obj.returnLink, "monitorTemplate");
+        try {
+            // @ts-ignore
+            await this.ses.sendTemplatedEmail(params, (err: any, data: any) => {
+                if (err) {
+                    console.error(err);
+                } else {
+                    console.log(data);
+                }
+            });
+        } catch (error) {
+            console.error(error);
+        }
     }
-
-    // Send Test Email
-    emailTest(obj: EmailInviteType) {
-        const params= getParams(obj.email, getTestBody(obj.name), "VirtualYou Test Notification", "me@dlwhitehurst.com");
-        this.ses.sendEmail(params, (err: any, data: any) => {
-            if (err) {
-                console.error(err);
-            } else {
-                console.log(data);
-            }
-        });
-    }
-}
+} // end class
 
 export default new MailService();
