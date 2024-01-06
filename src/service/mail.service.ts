@@ -36,7 +36,7 @@ class MailService {
 
     // Send Agent Invitation Email
     async emailAgent(obj: EmailInviteType) {
-        const params= getTemplateParams(obj.name, obj.email,"me@dlwhitehurst.com", obj.owner, obj.returnLink, "agentTemplate");
+        const params= getTemplateParams(obj.name, obj.email,"me@dlwhitehurst.com", obj.owner, obj.returnLink, "agentTemplate3");
         try {
             // @ts-ignore
             await this.ses.sendTemplatedEmail(params, (err: any, data: any) => {
@@ -53,7 +53,7 @@ class MailService {
 
     // Send Monitor Invitation Email
     async emailMonitor(obj: EmailInviteType) {
-        const params= getTemplateParams(obj.name, obj.email,"me@dlwhitehurst.com", obj.owner, obj.returnLink, "monitorTemplate");
+        const params= getTemplateParams(obj.name, obj.email,"me@dlwhitehurst.com", obj.owner, obj.returnLink, "monitorTemplate3");
         try {
             // @ts-ignore
             await this.ses.sendTemplatedEmail(params, (err: any, data: any) => {
