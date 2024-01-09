@@ -21,6 +21,8 @@
 
 import { Request, Response } from 'express';
 import mailService from "../service/mail.service";
+import logger from "../middleware/logger";
+import delegate from "../middleware/kafka";
 
 const sendAgentInvite = async (req: Request, res: Response) => {
     // Create new mail data object
@@ -59,10 +61,19 @@ const sendMonitorInvite = async (req: Request, res: Response) => {
         res.status(500).send('Internal server error');
     }
 }
+const sendActivity = async (req: Request, res: Response) => {
+    logger.log('info', 'Request: ' + req.body);
+    delegate.sendMessage(req.body.sender, req.body.message);
+    delegate.consumeLog();
+    res.status(200).send({
+        message: "We have a Kafka message."
+    })
+}
 
 const controller = {
     sendAgentInvite,
-    sendMonitorInvite
+    sendMonitorInvite,
+    sendActivity,
 };
 export default controller;
 

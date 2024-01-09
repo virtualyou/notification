@@ -1,6 +1,6 @@
 {
   "name": "notification",
-  "version": "0.1.10-prod",
+  "version": "0.1.11-dev",
   "description": "",
   "license": "Apache-2.0",
   "author": "David L Whitehurst",
@@ -42,6 +42,7 @@
     "http-status": "^1.6.2",
     "joi": "^17.8.4",
     "jsonwebtoken": "^9.0.0",
+    "kafkajs": "^2.2.4",
     "mysql2": "^2.3.3",
     "nodemailer": "^6.9.1",
     "reflect-metadata": "*",

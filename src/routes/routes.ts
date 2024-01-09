@@ -60,4 +60,11 @@ router.post(
     controller.sendMonitorInvite
 );
 
+// POST - send a Kafka notication
+router.post(
+    "/notification/v1/owner/send",
+    [authJwt.verifyToken, authJwt.isOwner],
+    controller.sendActivity
+);
+
 export default router;
