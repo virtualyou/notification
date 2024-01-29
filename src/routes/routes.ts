@@ -22,6 +22,7 @@ import { NextFunction, Request, Response } from "express";
 import controller from "../controllers/controller";
 import authJwt from '../utility/authJwt';
 import express from 'express';
+import authApp from "../utility/authApp";
 
 const router = express();
 
@@ -35,9 +36,15 @@ router.use((_req: Request, res: Response, next: NextFunction) => {
 
 /*
  * ************************************************************************
- * WARNING: Admin Only
+ * WARNING: Admin/App Only
  * ************************************************************************
  */
+// POST - send a username recover
+router.post(
+    "/notification/v1/username-recover",
+    [authApp.isApp],
+    controller.sendUsernameRecover
+);
 
 
 /*

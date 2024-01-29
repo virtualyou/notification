@@ -48,6 +48,20 @@ export function getTemplateParams(recipientName: string, recipientEmail: string,
     return params;
 }
 
+export function getUsernameRecoveryTemplateParams(fullName: string, recipientEmail: string, sourceEmail: string,
+                                  userName: string, template: string) {
+    const params: TParams = {
+        Destination: {ToAddresses: [recipientEmail]},
+        Source: sourceEmail,
+        Template: template,
+        TemplateData: '{' +
+            '\"fullname\": \"' + fullName + '\",' +
+            ' \"username\": \"' + userName + '\"' +
+            '}',
+    }
+    return params;
+}
+
 
 
 

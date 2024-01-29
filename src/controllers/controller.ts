@@ -22,6 +22,23 @@
 import { Request, Response } from 'express';
 import mailService from "../service/mail.service";
 
+const sendUsernameRecover = async (req: Request, res: Response) => {
+    const data = {
+        email: req.body.email,
+        fullname: req.body.fullname,
+        username: req.body.username
+    }
+    try {
+        await mailService.usernameRecover(data);
+        res.status(200).send({
+            message: "Email sent!"
+        });
+    } catch {
+        res.status(500).send('Internal server error');
+    }
+
+}
+
 const sendAgentInvite = async (req: Request, res: Response) => {
     // Create new mail data object
     const data = {
@@ -62,7 +79,8 @@ const sendMonitorInvite = async (req: Request, res: Response) => {
 
 const controller = {
     sendAgentInvite,
-    sendMonitorInvite
+    sendMonitorInvite,
+    sendUsernameRecover,
 };
 export default controller;
 

@@ -19,9 +19,10 @@ mail.service.ts - AWS SES email service
 */
 
 import { SES } from "@aws-sdk/client-ses";
-import { getTemplateParams } from "../utility/EmailParams";
+import { getTemplateParams, getUsernameRecoveryTemplateParams } from "../utility/EmailParams";
 import EmailInviteType from "../types/email.invite.type";
 import config from "../config/config";
+import UsernameRecoverType from "../types/username.recover.type";
 
 class MailService {
 
@@ -33,6 +34,23 @@ class MailService {
             secretAccessKey: config.aws.secret,
         }
     });
+
+    // Send Username Recovery Email
+    async usernameRecover(obj: UsernameRecoverType) {
+        const params= getUsernameRecoveryTemplateParams(obj.fullname, obj.email,"me@dlwhitehurst.com", obj.username, "userRecover");
+        try {
+            // @ts-ignore
+            await this.ses.sendTemplatedEmail(params, (err: any, data: any) => {
+                if (err) {
+                    console.error(err);
+                } else {
+                    console.log(data);
+                }
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     // Send Agent Invitation Email
     async emailAgent(obj: EmailInviteType) {
