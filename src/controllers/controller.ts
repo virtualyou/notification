@@ -22,6 +22,22 @@
 import { Request, Response } from 'express';
 import mailService from "../service/mail.service";
 
+const sendPasswordRenew = async (req: Request, res: Response) => {
+    const data = {
+        email: req.body.email,
+        fullname: req.body.fullname,
+        username: req.body.username,
+        returnLink: req.body.returnLink,
+    }
+    try {
+        await mailService.passwordRenew(data);
+        res.status(200).send({
+            message: "Email sent!"
+        });
+    } catch {
+        res.status(500).send('Internal server error');
+    }
+}
 const sendUsernameRecover = async (req: Request, res: Response) => {
     const data = {
         email: req.body.email,
@@ -36,7 +52,6 @@ const sendUsernameRecover = async (req: Request, res: Response) => {
     } catch {
         res.status(500).send('Internal server error');
     }
-
 }
 
 const sendAgentInvite = async (req: Request, res: Response) => {
@@ -81,6 +96,7 @@ const controller = {
     sendAgentInvite,
     sendMonitorInvite,
     sendUsernameRecover,
+    sendPasswordRenew,
 };
 export default controller;
 

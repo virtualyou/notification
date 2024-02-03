@@ -62,6 +62,20 @@ export function getUsernameRecoveryTemplateParams(fullName: string, recipientEma
     return params;
 }
 
+export function getPasswordRenewalTemplateParams(fullName: string, recipientEmail: string, sourceEmail: string,
+                                                  userName: string, template: string, returnLink: string) {
+    const params: TParams = {
+        Destination: {ToAddresses: [recipientEmail]},
+        Source: sourceEmail,
+        Template: template,
+        TemplateData: '{' +
+            '\"fullname\": \"' + fullName + '\",' +
+            ' \"username\": \"' + userName + '\",' +
+            ' \"returnLink\": \"' + returnLink + '\"' +
+            '}',
+    }
+    return params;
+}
 
 
 

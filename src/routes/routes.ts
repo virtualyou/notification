@@ -46,6 +46,12 @@ router.post(
     controller.sendUsernameRecover
 );
 
+// POST - send a password renewal
+router.post(
+    "/notification/v1/password-renew",
+    [authApp.isApp],
+    controller.sendPasswordRenew
+);
 
 /*
  * ************************************************************************

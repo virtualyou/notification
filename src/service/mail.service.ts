@@ -19,10 +19,15 @@ mail.service.ts - AWS SES email service
 */
 
 import { SES } from "@aws-sdk/client-ses";
-import { getTemplateParams, getUsernameRecoveryTemplateParams } from "../utility/EmailParams";
+import {
+    getPasswordRenewalTemplateParams,
+    getTemplateParams,
+    getUsernameRecoveryTemplateParams
+} from "../utility/EmailParams";
 import EmailInviteType from "../types/email.invite.type";
 import config from "../config/config";
 import UsernameRecoverType from "../types/username.recover.type";
+import PasswordRenewalType from "../types/password.renewal.type";
 
 class MailService {
 
@@ -35,12 +40,29 @@ class MailService {
         }
     });
 
-    // Send Username Recovery Email
-    async usernameRecover(obj: UsernameRecoverType) {
-        const params= getUsernameRecoveryTemplateParams(obj.fullname, obj.email,"me@dlwhitehurst.com", obj.username, "userRecover");
+    // Sent Password Renewal Email
+    async passwordRenew(obj: PasswordRenewalType) {
+        const params= getPasswordRenewalTemplateParams(obj.fullname, obj.email,"me@dlwhitehurst.com", obj.username, "passwordRenew2", obj.returnLink);
         try {
             // @ts-ignore
-            await this.ses.sendTemplatedEmail(params, (err: any, data: any) => {
+            this.ses.sendTemplatedEmail(params, (err: any, data: any) => {
+                if (err) {
+                    console.error(err);
+                } else {
+                    console.log(data);
+                }
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    // Send Username Recovery Email
+    async usernameRecover(obj: UsernameRecoverType) {
+        const params= getUsernameRecoveryTemplateParams(obj.fullname, obj.email,"me@dlwhitehurst.com", obj.username, "userRecover2");
+        try {
+            // @ts-ignore
+            this.ses.sendTemplatedEmail(params, (err: any, data: any) => {
                 if (err) {
                     console.error(err);
                 } else {
@@ -57,7 +79,7 @@ class MailService {
         const params= getTemplateParams(obj.name, obj.email,"me@dlwhitehurst.com", obj.owner, obj.returnLink, "agentTemplate3");
         try {
             // @ts-ignore
-            await this.ses.sendTemplatedEmail(params, (err: any, data: any) => {
+            this.ses.sendTemplatedEmail(params, (err: any, data: any) => {
                 if (err) {
                     console.error(err);
                 } else {
@@ -74,7 +96,7 @@ class MailService {
         const params= getTemplateParams(obj.name, obj.email,"me@dlwhitehurst.com", obj.owner, obj.returnLink, "monitorTemplate3");
         try {
             // @ts-ignore
-            await this.ses.sendTemplatedEmail(params, (err: any, data: any) => {
+            this.ses.sendTemplatedEmail(params, (err: any, data: any) => {
                 if (err) {
                     console.error(err);
                 } else {
