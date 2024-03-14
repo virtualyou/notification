@@ -24,6 +24,10 @@ import * as dotenv from "dotenv";
 import router from "./routes/routes";
 import cookieSession from "cookie-session";
 
+// swagger api documentation
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "../swagger.json";
+
 const app: Express = express();
 
 dotenv.config();
@@ -53,6 +57,9 @@ app.use(function (_req, res, next) {
 app.get("/", (_req, res) => {
     res.send("Welcome to the VirtualYou Notification API.");
 });
+
+// swagger path to api documentation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // routes
 app.use(router);
